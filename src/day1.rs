@@ -1,5 +1,6 @@
 use crate::get_input;
 use anyhow::Result;
+use std::collections::BinaryHeap;
 
 pub fn run() -> Result<()> {
 	// both parts use the same input
@@ -26,18 +27,20 @@ fn read_nums_chunked(input: &str) -> Result<Vec<Vec<i32>>> {
 }
 
 fn part_one(chunks: &[Vec<i32>]) -> i32 {
-	sums(chunks).max().unwrap()
+	sums(chunks).pop().unwrap()
 }
 
 fn part_two(chunks: &[Vec<i32>]) -> i32 {
-	let mut sums: Vec<_> = sums(chunks).collect();
-	sums.sort_unstable();
-	sums.reverse();
-	sums.iter().take(3).sum()
+	let mut sums = sums(chunks);
+	sums.pop().unwrap() + sums.pop().unwrap() + sums.pop().unwrap()
 }
 
-fn sums(chunks: &[Vec<i32>]) -> impl Iterator<Item = i32> + '_ {
-	chunks.iter().map(|chunk| chunk.iter().sum())
+fn sums(chunks: &[Vec<i32>]) -> BinaryHeap<i32> {
+	let mut heap = BinaryHeap::new();
+	for chunk in chunks {
+		heap.push(chunk.iter().sum());
+	}
+	heap
 }
 
 #[cfg(test)]
