@@ -1,7 +1,10 @@
+#![warn(clippy::pedantic)]
+
 use anyhow::Result;
 use std::{io::prelude::*, path::PathBuf};
 
 mod day1;
+mod day2;
 
 fn get_input(day: u8, part: u8) -> Result<String> {
 	let filename = format!("inputs/{}-{}.txt", day, part);
@@ -20,6 +23,7 @@ fn main() -> Result<()> {
 	let day: i32 = args[1].parse()?;
 	match day {
 		1 => day1::run()?,
+		2 => day2::run()?,
 		_ => {
 			eprintln!("Day not implemented");
 			std::process::exit(1);

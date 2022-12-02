@@ -14,14 +14,14 @@ fn read_nums_chunked(input: &str) -> Result<Vec<Vec<i32>>> {
 	let mut current_chunk = Vec::new();
 	for line in input.lines() {
 		let s = line;
-		if !s.is_empty() {
-			current_chunk.push(s.parse()?);
-		} else {
+		if s.is_empty() {
 			ret.push(current_chunk.clone());
 			current_chunk.clear();
+		} else {
+			current_chunk.push(s.parse()?);
 		}
 	}
-	ret.push(current_chunk.clone());
+	ret.push(current_chunk);
 	Ok(ret)
 }
 
@@ -31,7 +31,7 @@ fn part_one(chunks: &[Vec<i32>]) -> i32 {
 
 fn part_two(chunks: &[Vec<i32>]) -> i32 {
 	let mut sums: Vec<_> = sums(chunks).collect();
-	sums.sort();
+	sums.sort_unstable();
 	sums.reverse();
 	sums.iter().take(3).sum()
 }
