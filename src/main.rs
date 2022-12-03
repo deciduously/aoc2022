@@ -5,6 +5,7 @@ use std::{io::prelude::*, path::PathBuf};
 
 mod day1;
 mod day2;
+mod day3;
 
 fn get_input(day: u8, part: u8) -> Result<String> {
 	let filename = format!("inputs/{}-{}.txt", day, part);
@@ -24,6 +25,7 @@ fn main() -> Result<()> {
 	match day {
 		1 => day1::run()?,
 		2 => day2::run()?,
+		3 => day3::run()?,
 		_ => {
 			eprintln!("Day not implemented");
 			std::process::exit(1);
