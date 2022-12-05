@@ -40,17 +40,15 @@ fn make_inclusive_range(s: &str) -> RangeInclusive<i32> {
 }
 
 fn encompasses(range_one: RangeInclusive<i32>, range_two: RangeInclusive<i32>) -> bool {
-	range_one.start() <= range_two.start() && range_one.end() >= range_two.end()
-		|| range_two.start() <= range_one.start() && range_two.end() >= range_one.end()
+	range_one
+		.clone()
+		.into_iter()
+		.all(|x| range_two.contains(&x))
+		|| range_two.into_iter().all(|x| range_one.contains(&x))
 }
 
 fn overlaps(range_one: RangeInclusive<i32>, range_two: RangeInclusive<i32>) -> bool {
-	for x in range_one {
-		if range_two.contains(&x) {
-			return true;
-		}
-	}
-	false
+	range_one.into_iter().any(|x| range_two.contains(&x))
 }
 
 #[cfg(test)]
